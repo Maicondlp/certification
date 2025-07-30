@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Preparatório para Certificação em Segurança</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .quiz-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 25px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .question-container {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin: 0 0 10px 0;
+        }
+        .toggle-answer {
+            padding: 8px 15px;
+            font-size: 0.9em;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-answer:hover {
+            background-color: #2980b9;
+        }
+        .answer {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-left: 4px solid #1abc9c;
+            border-radius: 5px;
+        }
+        .answer.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h1>Quiz Preparatório para Certificação em Segurança</h1>
+        <p style="text-align:center;">Total de 150 perguntas para testar seus conhecimentos. Clique em "Mostrar Resposta" para revelar a solução de cada questão.</p>
+
+        <h2>Gerenciamento de permissões e controle de acesso</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>1.</strong> Qual comando é usado para alterar as permissões de um arquivo no Linux?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `chmod`. Ele pode usar notação octal (ex: 755) ou simbólica (ex: u+x).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>2.</strong> O que o comando `chown usuario:grupo arquivo.txt` faz?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Altera o dono (usuário) e o grupo do arquivo `arquivo.txt`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>3.</strong> Para que servem as Listas de Controle de Acesso (ACLs) em sistemas Linux?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Para fornecer um mecanismo de permissões mais flexível e granular do que as permissões tradicionais de dono, grupo e outros (ugo).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>4.</strong> Qual comando visualiza as ACLs de um arquivo?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `getfacl nome_do_arquivo`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>5.</strong> Como você daria permissão de leitura e escrita para um usuário `ana` em um arquivo `relatorio.doc` sem alterar o dono ou grupo?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Usando ACLs com o comando: `setfacl -m u:ana:rw relatorio.doc`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>6.</strong> O que significa a permissão `755` em notação octal?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Dono tem permissão de leitura, escrita e execução (rwx = 4+2+1=7). Grupo e outros têm permissão de leitura e execução (r-x = 4+0+1=5).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>7.</strong> O que é o bit SUID (Set User ID)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um bit de permissão especial que permite que um executável seja executado com os privilégios do dono do arquivo, e não do usuário que o executou.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>8.</strong> O que é o bit SGID (Set Group ID)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Em um executável, ele roda com os privilégios do grupo do arquivo. Em um diretório, novos arquivos criados herdam o grupo do diretório pai.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>9.</strong> O que é o "sticky bit" e onde ele é comumente usado?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um bit de permissão que, quando aplicado a um diretório, permite que apenas o dono do arquivo (ou o root) possa renomear ou deletar um arquivo dentro daquele diretório. É comumente usado no diretório `/tmp`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>10.</strong> Qual a diferença entre Controle de Acesso Discricionário (DAC) e Controle de Acesso Obrigatório (MAC)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> No DAC (padrão Linux com chmod), o dono do objeto define as permissões. No MAC (SELinux/AppArmor), uma política de segurança centralizada define as permissões, sobrepondo-se às decisões do dono.</p></div>
+        </div>
+        
+        <h2>Configuração de firewalls (iptables, nftables)</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>11.</strong> O que são as três "chains" padrão da tabela `filter` no iptables?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `INPUT` (pacotes destinados ao próprio firewall), `OUTPUT` (pacotes gerados pelo firewall) e `FORWARD` (pacotes que atravessam o firewall).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>12.</strong> Qual comando iptables bloqueia todo o tráfego de entrada do IP `192.168.1.100`?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `iptables -A INPUT -s 192.168.1.100 -j DROP`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>13.</strong> Qual é a principal vantagem do nftables sobre o iptables?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> O nftables possui uma sintaxe mais simples e unificada, melhor performance e unifica as ferramentas `iptables`, `ip6tables`, `arptables` e `ebtables` em uma única ferramenta (`nft`).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>14.</strong> Em nftables, como você criaria uma regra para aceitar conexões SSH (porta 22)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `nft add rule inet filter input tcp dport 22 accept`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>15.</strong> O que significa a ação `REJECT` no iptables, e como ela difere de `DROP`?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `DROP` descarta o pacote silenciosamente. `REJECT` descarta o pacote, mas envia uma mensagem de erro (ex: "port unreachable") ao remetente.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>16.</strong> Para que serve a tabela `nat` no iptables?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É usada para tradução de endereços de rede (Network Address Translation), principalmente para mascaramento (SNAT) e redirecionamento de portas (DNAT).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>17.</strong> Qual comando lista todas as regras de iptables com números de linha?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `iptables -L -n --line-numbers`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>18.</strong> O que é um firewall "stateful"?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um firewall que rastreia o estado das conexões de rede (ex: `NEW`, `ESTABLISHED`, `RELATED`). Ele pode permitir pacotes de resposta a conexões já estabelecidas, mesmo que não haja uma regra explícita para eles.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>19.</strong> Como você define a política padrão da chain `INPUT` para `DROP` no iptables?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `iptables -P INPUT DROP`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>20.</strong> No nftables, o que é uma "table family"?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Define o tipo de protocolo que a tabela irá processar, como `ip` (para IPv4), `ip6` (para IPv6), `inet` (para ambos IPv4 e IPv6), `arp`, etc.</p></div>
+        </div>
+        
+        <h2>Análise de tráfego de rede (tcpdump, Wireshark)</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>21.</strong> Qual é a principal diferença entre `tcpdump` e `Wireshark`?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `tcpdump` é uma ferramenta de linha de comando, ideal para captura rápida e análise em servidores. `Wireshark` é uma ferramenta gráfica (GUI) que oferece análise visual e muito mais detalhada dos pacotes.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>22.</strong> Qual comando `tcpdump` captura os 100 primeiros pacotes na interface `eth0`?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `tcpdump -i eth0 -c 100`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>23.</strong> Como você usaria `tcpdump` para capturar todo o tráfego de e para o host `10.0.0.5`?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `tcpdump host 10.0.0.5`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>24.</strong> Para que serve a opção `-w` no `tcpdump`?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Para escrever (write) a captura de pacotes em um arquivo (formato `.pcap`), em vez de exibi-la na tela. Ex: `tcpdump -w captura.pcap`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>25.</strong> O que é um "display filter" no Wireshark?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um filtro aplicado após a captura para exibir apenas os pacotes que correspondem a um critério específico (ex: `ip.addr == 8.8.8.8` ou `tcp.port == 443`), sem descartar os outros pacotes da captura.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>26.</strong> Qual comando `tcpdump` captura apenas o tráfego na porta 80 ou 443?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `tcpdump 'port 80 or port 443'`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>27.</strong> No Wireshark, como você pode seguir um stream TCP?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Clicando com o botão direito em um pacote TCP da conversa e selecionando "Follow > TCP Stream". Isso remonta e exibe os dados da aplicação trocados na conexão.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>28.</strong> Para que serve a opção `-n` no `tcpdump`?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Para não resolver endereços IP para nomes de host (DNS) e portas para nomes de serviços, o que torna a captura mais rápida.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>29.</strong> O que é o "three-way handshake" do TCP e como ele aparece no Wireshark?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É o processo de estabelecimento de uma conexão TCP. No Wireshark, ele aparece como três pacotes: `[SYN]`, `[SYN, ACK]` e `[ACK]`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>30.</strong> Qual filtro de captura (BPF syntax) você usaria no `tcpdump` para ignorar o tráfego SSH?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `tcpdump 'not port 22'`.</p></div>
+        </div>
+
+        <h2>Gestão segura de repositórios e atualizações</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>31.</strong> Por que é crucial usar HTTPS nos URLs de repositórios de software (como APT ou YUM)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Para criptografar a comunicação entre o cliente e o servidor do repositório, protegendo contra ataques man-in-the-middle (MitM) que poderiam interceptar ou modificar os metadados dos pacotes.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>32.</strong> Qual é o propósito da assinatura de pacotes com GPG?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Garante a autenticidade (confirma que o pacote veio do mantenedor legítimo) e a integridade (confirma que o pacote não foi modificado desde que foi assinado).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>33.</strong> Em um sistema Debian/Ubuntu, qual arquivo principal define os repositórios do APT?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `/etc/apt/sources.list` e os arquivos dentro do diretório `/etc/apt/sources.list.d/`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>34.</strong> Em um sistema CentOS/RHEL, onde os arquivos de configuração de repositórios do YUM/DNF são armazenados?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> No diretório `/etc/yum.repos.d/`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>35.</strong> O que acontece se a verificação de assinatura GPG de um pacote falhar durante uma instalação com APT ou YUM?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> O gerenciador de pacotes irá recusar a instalação do pacote e emitirá um aviso de segurança, pois a autenticidade do pacote não pode ser verificada.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>36.</strong> O que é o "Princípio do Menor Privilégio" e como ele se aplica à gestão de atualizações?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> O princípio diz que um processo deve ter apenas as permissões mínimas necessárias para sua função. Em atualizações, isso significa que as tarefas devem ser executadas com privilégios de root apenas quando estritamente necessário.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>37.</strong> Qual o risco de adicionar um repositório de terceiros não confiável ao seu sistema?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> O risco principal é a instalação de software malicioso (malware, backdoors) ou pacotes instáveis que podem comprometer a segurança e a estabilidade do sistema.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>38.</strong> O que o comando `apt-get update` realmente faz?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Ele não atualiza os pacotes. Ele resincroniza os arquivos de índice de pacotes a partir de suas fontes (os repositórios), atualizando a lista local de pacotes disponíveis e suas versões.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>39.</strong> O que é "package pinning" (fixação de pacotes) e quando é útil?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma técnica para forçar o sistema a instalar uma versão específica de um pacote, mesmo que uma mais nova esteja disponível. É útil para evitar que uma atualização quebre a compatibilidade com outros softwares.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>40.</strong> Qual a importância de aplicar atualizações de segurança de forma regular e oportuna?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Para corrigir vulnerabilidades conhecidas (CVEs) antes que possam ser exploradas por atacantes, reduzindo a superfície de ataque do sistema.</p></div>
+        </div>
+
+        <h2>Verificação de integridade com hashes e GPG</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>41.</strong> O que é uma função de hash criptográfica?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um algoritmo que pega uma entrada de tamanho arbitrário e produz uma saída de tamanho fixo (o hash). É projetada para ser uma função de mão única, e qualquer mudança na entrada, por menor que seja, gera um hash completamente diferente.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>42.</strong> Qual comando gera um hash SHA-256 de um arquivo `documento.pdf`?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `sha256sum documento.pdf`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>43.</strong> Se você baixar um arquivo e o hash SHA-256 dele corresponder ao publicado no site oficial, o que isso garante?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Garante a **integridade** do arquivo, ou seja, que ele não foi corrompido ou modificado durante o download.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>44.</strong> Por que o MD5 não é mais considerado seguro para verificação de integridade em cenários de alta segurança?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Porque ele é vulnerável a "colisões", onde dois arquivos diferentes podem gerar o mesmo hash MD5, permitindo que um atacante substitua um arquivo legítimo por um malicioso com o mesmo hash.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>45.</strong> O que uma assinatura GPG garante que um hash sozinho não garante?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> A **autenticidade**. A assinatura GPG confirma quem foi o autor do arquivo (a pessoa que detém a chave privada correspondente à chave pública usada para verificação).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>46.</strong> Qual comando GPG é usado para verificar a assinatura de um arquivo?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `gpg --verify arquivo.asc arquivo_original`. (Onde `arquivo.asc` é o arquivo de assinatura).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>47.</strong> O que é um "detached signature" (assinatura destacada) no GPG?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma assinatura que é salva em um arquivo separado (geralmente `.asc` ou `.sig`), em vez de ser incorporada ao arquivo original. Isso mantém o arquivo original intacto.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>48.</strong> Para verificar uma assinatura GPG, o que você precisa ter em seu "keyring" (chaveiro)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Você precisa ter a chave **pública** da pessoa ou entidade que assinou o arquivo.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>49.</strong> O que são HMACs (Hash-based Message Authentication Codes)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> São códigos de autenticação que usam uma função de hash junto com uma chave secreta. Eles garantem tanto a integridade dos dados quanto a autenticidade, pois apenas quem conhece a chave secreta pode gerar o HMAC correto.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>50.</strong> Qual o propósito de ferramentas como `AIDE` ou `Tripwire`?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> São Sistemas de Detecção de Intrusão baseados em Host (HIDS) que monitoram a integridade dos arquivos. Eles criam um banco de dados de hashes de arquivos importantes do sistema e periodicamente os verificam para detectar modificações não autorizadas.</p></div>
+        </div>
+
+        <h2>Implementação de criptografia (LUKS, GnuPG)</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>51.</strong> O que é LUKS (Linux Unified Key Setup)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É o padrão para criptografia de disco no Linux. Ele fornece uma camada de criptografia a nível de bloco (block device), permitindo que qualquer partição ou disco inteiro seja criptografado.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>52.</strong> A criptografia com LUKS protege os dados "em trânsito" ou "em repouso"?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Protege os dados **em repouso** (data-at-rest), ou seja, quando estão armazenados no disco rígido ou SSD e o sistema está desligado ou a partição está desmontada.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>53.</strong> Para que serve o GnuPG (GPG)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma implementação do padrão OpenPGP usada para criptografar e assinar dados. É comumente usada para proteger arquivos, e-mails e comunicações.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>54.</strong> Qual comando GPG você usaria para criptografar um arquivo `segredo.txt` para um destinatário com o e-mail `destinatario@exemplo.com`?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `gpg --encrypt --recipient destinatario@exemplo.com segredo.txt`. Isso criará um arquivo `segredo.txt.gpg`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>55.</strong> Para descriptografar um arquivo GPG que foi criptografado para você, o que você precisa?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Sua **chave privada** e a senha (passphrase) que protege essa chave privada.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>56.</strong> O que é o "header" de uma partição LUKS e por que ele é importante?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> O header armazena metadados sobre a criptografia, incluindo os "key slots" que contêm as chaves mestras criptografadas. Se o header for corrompido, os dados se tornam irrecuperáveis.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>57.</strong> É possível ter múltiplas senhas para descriptografar a mesma partição LUKS?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Sim. LUKS suporta até 8 "key slots". Cada slot pode conter a chave mestra criptografada com uma senha ou chave diferente, permitindo acesso por múltiplos usuários ou como backup.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>58.</strong> Qual é a diferença fundamental entre criptografar um arquivo com GPG e criptografar a partição inteira com LUKS?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> GPG criptografa objetos individuais (arquivos), enquanto LUKS criptografa um dispositivo de bloco inteiro de forma transparente. Com LUKS, uma vez que a partição é "aberta", o acesso aos arquivos é transparente para o sistema operacional; com GPG, cada arquivo deve ser descriptografado individualmente.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>59.</strong> O que é a "Web of Trust" (Rede de Confiança) no GPG?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um modelo de confiança descentralizado. Em vez de uma autoridade central, os usuários assinam as chaves públicas uns dos outros para atestar sua validade, criando uma rede de confiança.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>60.</strong> Qual comando GPG é usado para criptografia simétrica (usando apenas uma senha)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `gpg --symmetric arquivo.txt`. Ele pedirá uma senha para criptografar e a mesma senha para descriptografar.</p></div>
+        </div>
+
+        <h2>Hardening com SELinux/AppArmor</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>61.</strong> O que SELinux e AppArmor implementam?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Controle de Acesso Obrigatório (MAC - Mandatory Access Control).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>62.</strong> Qual é a principal diferença na abordagem de políticas entre SELinux e AppArmor?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> O SELinux usa um sistema de "rotulagem" (labeling) em cada objeto (arquivo, processo, porta), e as políticas são baseadas nesses rótulos. O AppArmor usa perfis baseados em caminhos de arquivos (path-based).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>63.</strong> Quais são os três modos de operação principais do SELinux?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `Enforcing` (Aplica a política e bloqueia violações), `Permissive` (Não bloqueia, mas registra as violações) e `Disabled` (Desativado).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>64.</strong> Em AppArmor, o que é o modo "complain"?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É análogo ao modo `Permissive` do SELinux. O AppArmor não bloqueia as ações que violam a política, mas registra as reclamações (complaints) nos logs do sistema.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>65.</strong> Por que um processo rodando como `root` pode ser impedido de acessar um arquivo pelo SELinux?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Porque no MAC, as regras da política de segurança têm precedência sobre as permissões do usuário, incluindo o `root`. Se a política não permite que o contexto do processo `root` acesse o contexto do arquivo, a ação é bloqueada.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>66.</strong> Qual comando é usado para verificar o status do SELinux?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `sestatus` ou `getenforce`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>67.</strong> Onde as violações de política do SELinux são geralmente registradas?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> No arquivo de log de auditoria, geralmente em `/var/log/audit/audit.log`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>68.</strong> O que significa o erro "Permission denied" quando o `chmod 777` não resolve o problema?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um forte indicador de que uma camada de segurança MAC, como SELinux ou AppArmor, está bloqueando o acesso, pois a política MAC se sobrepõe às permissões DAC (chmod).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>69.</strong> Qual comando é usado para restaurar o contexto de segurança padrão do SELinux para um arquivo?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> `restorecon -v /caminho/do/arquivo`.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>70.</strong> Para que servem as "booleanas" do SELinux?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> São "interruptores" (on/off) que permitem modificar partes da política de segurança do SELinux em tempo de execução, sem a necessidade de recarregar ou recompilar a política inteira.</p></div>
+        </div>
+
+        <h2>Aplicação dos princípios CID (Confidencialidade, Integridade, Disponibilidade)</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>71.</strong> Defina Confidencialidade.</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É a garantia de que a informação é acessível apenas para entidades autorizadas. Previne a divulgação não autorizada de dados.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>72.</strong> Defina Integridade.</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É a garantia de que os dados são exatos e completos, e que não foram modificados de forma não autorizada.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>73.</strong> Defina Disponibilidade.</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É a garantia de que os sistemas e os dados estão acessíveis e utilizáveis sob demanda por uma entidade autorizada.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>74.</strong> A criptografia de um disco rígido com LUKS é um controle para qual princípio do CID?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Principalmente **Confidencialidade**.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>75.</strong> A verificação de um arquivo com um hash SHA-256 está relacionada a qual princípio?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> **Integridade**.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>76.</strong> A implementação de um cluster de servidores com failover e balanceamento de carga visa garantir qual princípio?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> **Disponibilidade**.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>77.</strong> Um ataque de negação de serviço (DDoS) visa comprometer qual princípio do CID?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> **Disponibilidade**.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>78.</strong> O uso de senhas fortes e autenticação de dois fatores (2FA) reforça qual princípio?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> **Confidencialidade**, pois impede o acesso não autorizado.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>79.</strong> Como as assinaturas digitais (GPG) se relacionam com os princípios CID?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Elas garantem **Integridade** (o dado não foi alterado) e **Autenticidade** (que leva ao Não-Repúdio), um conceito relacionado à **Integridade**.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>80.</strong> A política de backups regulares e testados é um controle para qual princípio?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Principalmente **Disponibilidade** (garantindo a recuperação de dados), mas também **Integridade** (restaurando uma versão não corrompida).</p></div>
+        </div>
+
+        <h2>Identificação e mitigação de ameaças</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>81.</strong> O que é Phishing?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um tipo de ataque de engenharia social onde um atacante tenta enganar uma vítima para que ela revele informações sensíveis (como credenciais ou dados bancários), geralmente se passando por uma entidade confiável em uma comunicação eletrônica.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>82.</strong> Qual é a principal mitigação contra ataques de força bruta em senhas?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Implementar uma política de bloqueio de conta após um número de tentativas falhas e usar autenticação multifator (MFA).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>83.</strong> O que é um ataque Man-in-the-Middle (MitM)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um ataque onde o atacante se posiciona secretamente entre duas partes que acreditam estar se comunicando diretamente, permitindo que ele intercepte, leia e modifique a comunicação.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>84.</strong> Como o uso de HTTPS mitiga ataques MitM?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Criptografando o tráfego entre o cliente e o servidor. Mesmo que o atacante intercepte a comunicação, ele não conseguirá ler o conteúdo, pois não possui a chave de criptografia.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>85.</strong> O que é Ransomware?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um tipo de malware que criptografa os arquivos da vítima e exige o pagamento de um resgate (ransom) para fornecer a chave de descriptografia.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>86.</strong> Qual é a defesa mais eficaz contra a perda de dados por Ransomware?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Ter backups regulares, testados e armazenados offline ou em um local isolado da rede principal.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>87.</strong> O que é "hardening" de um sistema?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É o processo de proteger um sistema reduzindo sua superfície de ataque. Isso inclui remover softwares desnecessários, desabilitar serviços não utilizados, aplicar patches e configurar o sistema com as melhores práticas de segurança.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>88.</strong> O que é uma vulnerabilidade de "Zero-Day"?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma vulnerabilidade em um software que é desconhecida pelo fornecedor ou pelo público. Por não haver uma correção disponível, ela é extremamente perigosa.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>89.</strong> Como o "Princípio do Menor Privilégio" ajuda a mitigar ameaças?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Ao garantir que usuários e processos tenham apenas as permissões mínimas necessárias, ele limita o dano que pode ser causado caso uma conta ou processo seja comprometido.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>90.</strong> O que é a segmentação de rede e por que é uma boa prática de segurança?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É a prática de dividir uma rede em sub-redes menores e isoladas (segmentos ou VLANs). Isso ajuda a conter a propagação de malware e limita o movimento lateral de um atacante caso um segmento seja comprometido.</p></div>
+        </div>
+
+        <h2>Avaliação e priorização de riscos</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>91.</strong> O que é um risco em segurança da informação?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É a probabilidade de uma ameaça explorar uma vulnerabilidade de um ativo, causando um impacto negativo para a organização. Risco = Ameaça x Vulnerabilidade x Impacto.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>92.</strong> Qual a diferença entre uma ameaça e uma vulnerabilidade?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Uma **ameaça** é qualquer coisa que possa causar dano (ex: um hacker, um malware, um desastre natural). Uma **vulnerabilidade** é uma fraqueza que pode ser explorada por uma ameaça (ex: uma senha fraca, um software desatualizado).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>93.</strong> O que é avaliação de risco quantitativa?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma abordagem que tenta atribuir valores monetários objetivos ao risco. Ela calcula métricas como a Expectativa de Perda Anual (ALE).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>94.</strong> O que é avaliação de risco qualitativa?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma abordagem mais subjetiva que classifica os riscos usando escalas descritivas, como Baixo, Médio e Alto, com base no julgamento e na experiência dos avaliadores.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>95.</strong> Quais são as quatro principais estratégias de tratamento de risco?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> **Mitigar** (aplicar controles), **Transferir** (ex: comprar um seguro), **Aceitar** (quando o custo do controle supera o impacto) e **Evitar** (interromper a atividade que causa o risco).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>96.</strong> O que é o "apetite a risco" de uma organização?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É o nível de risco que uma organização está disposta a aceitar na busca de seus objetivos.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>97.</strong> Para que serve uma matriz de risco (ou matriz de probabilidade e impacto)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma ferramenta visual usada na avaliação de risco qualitativa para ajudar a priorizar os riscos. Ela cruza a probabilidade de ocorrência de um risco com o impacto que ele causaria.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>98.</strong> O que é um "risco residual"?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É o risco que permanece mesmo após a implementação de controles de segurança para mitigá-lo.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>99.</strong> Na fórmula Risco = Ameaça x Vulnerabilidade, a aplicação de um patch de segurança afeta qual componente?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> A **Vulnerabilidade**, pois o patch corrige a fraqueza no software.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>100.</strong> Por que a priorização de riscos é importante?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Porque as organizações têm recursos finitos (tempo, dinheiro, pessoal). A priorização garante que os recursos sejam alocados para tratar os riscos mais críticos primeiro.</p></div>
+        </div>
+
+        <h2>Conformidade com normas (ISO 27001, GDPR, LGPD)</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>101.</strong> O que é a ISO 27001?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma norma internacional que especifica os requisitos para estabelecer, implementar, manter e melhorar continuamente um Sistema de Gestão de Segurança da Informação (SGSI).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>102.</strong> O que é o Anexo A da ISO 27001?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma lista de referência de objetivos de controle e controles de segurança. Não é obrigatório implementar todos, mas a organização deve justificar por que cada controle foi incluído ou excluído em sua Declaração de Aplicabilidade (SoA).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>103.</strong> O que é a GDPR (General Data Protection Regulation)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É o regulamento de proteção de dados da União Europeia. Ele estabelece regras rígidas sobre como as organizações devem coletar, usar e proteger os dados pessoais dos cidadãos da UE.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>104.</strong> O que é a LGPD (Lei Geral de Proteção de Dados)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É a lei brasileira de proteção de dados, fortemente inspirada na GDPR. Ela regula o tratamento de dados pessoais de indivíduos no Brasil.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>105.</strong> Qual é o conceito de "dado pessoal" segundo a LGPD?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É qualquer informação relacionada a uma pessoa natural identificada ou identificável (ex: nome, CPF, e-mail, endereço IP, dados de localização).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>106.</strong> O que é "Privacy by Design" (Privacidade desde a concepção), um conceito importante na GDPR e LGPD?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É a abordagem de incorporar a proteção de dados e a privacidade em todas as fases do desenvolvimento de um sistema ou processo, desde o início, em vez de adicioná-las como um recurso posterior.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>107.</strong> Qual o papel do DPO (Data Protection Officer) ou Encarregado de Dados?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Atuar como o ponto de contato entre a organização, os titulares dos dados e a autoridade nacional de proteção de dados (ANPD no Brasil), além de orientar a organização sobre conformidade.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>108.</strong> A ISO 27001 é uma lei ou uma norma?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma **norma**. A conformidade com ela é voluntária, a menos que exigida por contrato ou regulamentação setorial. Já a GDPR e a LGPD são **leis** e sua conformidade é obrigatória.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>109.</strong> O que é um Relatório de Impacto à Proteção de Dados Pessoais (RIPD)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um documento exigido pela LGPD que descreve os processos de tratamento de dados pessoais que podem gerar riscos às liberdades civis e aos direitos fundamentais, bem como as medidas para mitigar esses riscos.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>110.</strong> Cite um direito dos titulares de dados garantido pela LGPD/GDPR.</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Direito de acesso, direito de retificação, direito de exclusão (direito de ser esquecido), direito à portabilidade dos dados, entre outros.</p></div>
+        </div>
+
+        <h2>Criptografia simétrica e assimétrica</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>111.</strong> Qual é a característica fundamental da criptografia simétrica?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Ela usa a **mesma chave** para criptografar e descriptografar os dados.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>112.</strong> Qual é a característica fundamental da criptografia assimétrica?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Ela usa um **par de chaves** matematicamente relacionadas: uma chave pública (para criptografar ou verificar assinatura) e uma chave privada (para descriptografar ou assinar).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>113.</strong> Cite um exemplo de algoritmo de criptografia simétrica.</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> AES (Advanced Encryption Standard), DES, 3DES, Blowfish.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>114.</strong> Cite um exemplo de algoritmo de criptografia assimétrica.</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> RSA, ECC (Elliptic Curve Cryptography), Diffie-Hellman.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>115.</strong> Qual é o principal desafio da criptografia simétrica?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> A distribuição segura da chave. Ambas as partes precisam ter a mesma chave secreta sem que ela seja interceptada por um terceiro.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>116.</strong> Qual tipo de criptografia é geralmente mais rápido e mais adequado para grandes volumes de dados?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Criptografia **simétrica**.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>117.</strong> Como a criptografia híbrida funciona (como em TLS/SSL)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Ela usa a criptografia **assimétrica** para trocar de forma segura uma chave de sessão. Depois que a chave de sessão é compartilhada, a comunicação passa a ser criptografada com um algoritmo **simétrico** (mais rápido) usando essa chave.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>118.</strong> Se Alice quer enviar uma mensagem criptografada para Bob usando criptografia assimétrica, qual chave ela usa para criptografar?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> A chave **pública** de Bob.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>119.</strong> Se Bob quer criar uma assinatura digital para um documento, qual chave ele usa para assinar?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> A sua própria chave **privada**.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>120.</strong> Para que serve o algoritmo Diffie-Hellman?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um protocolo de troca de chaves que permite que duas partes estabeleçam uma chave secreta compartilhada sobre um canal de comunicação inseguro, sem nunca terem se comunicado antes.</p></div>
+        </div>
+        
+        <h2>Segurança em servidores web (OWASP Top 10)</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>121.</strong> O que é o OWASP Top 10?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um documento de conscientização padrão para desenvolvedores e segurança de aplicações web. Ele representa um amplo consenso sobre os riscos de segurança mais críticos para aplicações web.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>122.</strong> O que é uma vulnerabilidade de Injeção (Injection) e qual é o tipo mais comum?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Ocorre quando dados não confiáveis são enviados para um interpretador como parte de um comando ou consulta. O tipo mais comum é a Injeção de SQL (SQLi).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>123.</strong> O que é Cross-Site Scripting (XSS)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma falha que permite a um atacante injetar scripts maliciosos (geralmente JavaScript) em páginas web visualizadas por outros usuários. O script é executado no navegador da vítima.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>124.</strong> Qual é a principal defesa contra Injeção de SQL?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Usar "prepared statements" (consultas parametrizadas) e ORMs (Object-Relational Mapping), que separam os dados da consulta, impedindo que a entrada do usuário seja interpretada como código SQL.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>125.</strong> O que é uma vulnerabilidade de "Broken Authentication" (Quebra de Autenticação)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> São falhas na implementação das funções de autenticação e gerenciamento de sessão, permitindo que atacantes comprometam senhas, chaves ou tokens de sessão para assumir a identidade de outros usuários.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>126.</strong> O que é Cross-Site Request Forgery (CSRF ou XSRF)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um ataque que força um usuário final autenticado a executar ações indesejadas em uma aplicação web na qual ele está atualmente logado. O ataque se aproveita da confiança que a aplicação tem no navegador do usuário.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>127.</strong> O que é "Security Misconfiguration" (Configuração Incorreta de Segurança)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> São falhas de segurança resultantes de configurações inseguras. Exemplos incluem não alterar senhas padrão, habilitar recursos de depuração em produção ou exibir mensagens de erro detalhadas para os usuários.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>128.</strong> O que é uma vulnerabilidade de "Insecure Deserialization" (Desserialização Insegura)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Ocorre quando dados serializados não confiáveis são processados, podendo levar à execução remota de código ou outros ataques se a aplicação desserializar objetos maliciosos.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>129.</strong> O que é a categoria "Broken Access Control" (Quebra de Controle de Acesso) do OWASP?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Refere-se a falhas na aplicação das restrições de acesso. Isso permite que atacantes acessem funcionalidades ou dados que não deveriam, como acessar a conta de outro usuário ou visualizar páginas de administração.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>130.</strong> Qual o propósito do cabeçalho HTTP `Content-Security-Policy` (CSP)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É uma camada de segurança que ajuda a detectar e mitigar certos tipos de ataques, incluindo Cross-Site Scripting (XSS) e injeção de dados, ao especificar quais fontes de conteúdo (scripts, imagens, etc.) o navegador tem permissão para carregar.</p></div>
+        </div>
+
+        <h2>Sistemas IDS/IPS</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>131.</strong> Qual é a principal diferença entre um IDS (Intrusion Detection System) e um IPS (Intrusion Prevention System)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Um IDS **detecta** atividades maliciosas e gera um alerta. Um IPS **detecta** e tenta **prevenir** ativamente o ataque, bloqueando o tráfego malicioso.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>132.</strong> O que é um NIDS (Network Intrusion Detection System)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um IDS que é posicionado em um ponto estratégico da rede para monitorar o tráfego de e para todos os dispositivos na rede.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>133.</strong> O que é um HIDS (Host-based Intrusion Detection System)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um IDS que roda em um host individual (um servidor ou estação de trabalho) e monitora a atividade interna daquele sistema, como chamadas de sistema e integridade de arquivos.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>134.</strong> O que é a detecção baseada em assinaturas (signature-based)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um método de detecção onde o IDS/IPS procura por padrões específicos (assinaturas) de ataques conhecidos no tráfego de rede ou nos logs do sistema.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>135.</strong> O que é a detecção baseada em anomalias (anomaly-based)?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um método onde o IDS/IPS primeiro estabelece uma linha de base (baseline) do comportamento normal da rede ou do sistema. Qualquer desvio significativo dessa linha de base é sinalizado como uma possível intrusão.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>136.</strong> Qual é a principal desvantagem da detecção baseada em assinaturas?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Ela não consegue detectar ataques novos ou de dia zero (zero-day), pois ainda não existe uma assinatura para eles.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>137.</strong> Qual é a principal desvantagem da detecção baseada em anomalias?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Ela pode gerar um alto número de "falsos positivos", ou seja, alertar sobre atividades legítimas que desviaram da linha de base normal.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>138.</strong> Onde um IPS deve ser posicionado na rede?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Ele deve ser posicionado "inline" (em linha), de modo que todo o tráfego que ele precisa inspecionar passe através dele, permitindo que ele bloqueie pacotes maliciosos.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>139.</strong> O que é um falso positivo em um IDS/IPS?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um alerta gerado pelo sistema para uma atividade que na verdade é benigna e não representa uma ameaça real.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>140.</strong> O que é um falso negativo em um IDS/IPS?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É a falha do sistema em detectar e alertar sobre um ataque real que ocorreu. Falsos negativos são geralmente mais perigosos que falsos positivos.</p></div>
+        </div>
+
+        <h2>Resposta a incidentes e recuperação</h2>
+        <div class="question-container">
+            <p class="question-text"><strong>141.</strong> Quais são as seis fases do ciclo de vida de resposta a incidentes, segundo o NIST?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> 1. Preparação; 2. Detecção e Análise; 3. Contenção; 4. Erradicação; 5. Recuperação; 6. Atividades Pós-Incidente (Lições Aprendidas).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>142.</strong> O que ocorre na fase de **Preparação**?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> A organização se prepara para lidar com incidentes antes que eles ocorram. Isso inclui criar um plano de resposta, treinar a equipe, e ter as ferramentas necessárias prontas.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>143.</strong> O que é a fase de **Contenção**?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É a fase onde ações são tomadas para limitar o dano e impedir que o incidente se espalhe. Isso pode incluir isolar sistemas da rede ou desabilitar certas funcionalidades.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>144.</strong> Qual é o objetivo da fase de **Erradicação**?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Remover a causa raiz do incidente do ambiente. Isso pode significar eliminar um malware, desativar credenciais comprometidas ou corrigir uma vulnerabilidade.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>145.</strong> O que é feito na fase de **Recuperação**?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Os sistemas afetados são restaurados para a operação normal de forma segura. Isso pode envolver a restauração de backups e o monitoramento cuidadoso para garantir que o incidente não retorne.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>146.</strong> Por que a fase de **Lições Aprendidas** (Pós-Incidente) é crucial?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Para analisar o que aconteceu, como a equipe respondeu, e o que pode ser melhorado. Isso ajuda a fortalecer as defesas e a aprimorar o plano de resposta a incidentes para o futuro.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>147.</strong> O que é a "Cadeia de Custódia" em forense digital e resposta a incidentes?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É a documentação cronológica que mostra quem coletou, manuseou, transferiu e protegeu as evidências digitais. É fundamental para garantir que as evidências sejam admissíveis em um processo legal.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>148.</strong> Qual é a primeira ação a ser tomada ao se detectar um incidente de segurança em andamento?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Seguir o plano de resposta a incidentes. Geralmente, o primeiro passo é confirmar e analisar o incidente (Detecção e Análise) para entender seu escopo antes de passar para a Contenção.</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>149.</strong> O que é um "playbook" de resposta a incidentes?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> É um guia detalhado, passo a passo, que define as ações específicas a serem tomadas pela equipe de segurança para um tipo particular de incidente (ex: um playbook para ransomware, outro para phishing).</p></div>
+        </div>
+        <div class="question-container">
+            <p class="question-text"><strong>150.</strong> Por que é arriscado "contra-atacar" um invasor durante um incidente?</p>
+            <button class="toggle-answer">Mostrar Resposta</button>
+            <div class="answer hidden"><p><strong>Resposta:</strong> Pode ser ilegal, pode escalar o conflito, pode fazer com que o atacante apague seus rastros, e pode expor a organização a responsabilidades legais. A resposta deve focar em contenção e erradicação, não em retaliação.</p></div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.toggle-answer');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const answerDiv = this.nextElementSibling;
+                    answerDiv.classList.toggle('hidden');
+                    if (answerDiv.classList.contains('hidden')) {
+                        this.textContent = 'Mostrar Resposta';
+                    } else {
+                        this.textContent = 'Ocultar Resposta';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
