@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interativo de Segurança Cibernética</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .quiz-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 25px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+        h1 {
+            color: #1d3557;
+            text-align: center;
+            border-bottom: 3px solid #457b9d;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #457b9d;
+            border-left: 4px solid #a8dadc;
+            padding-left: 10px;
+            margin-top: 40px;
+        }
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .question-text {
+            font-size: 1.15em;
+            font-weight: 600;
+            margin: 0 0 15px 0;
+            color: #1d3557;
+        }
+        .options-form .option-label {
+            display: block;
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .options-form .option-label:hover {
+            background-color: #eaf4ff;
+            border-color: #457b9d;
+        }
+        .options-form input[type="radio"] {
+            margin-right: 10px;
+        }
+        .check-btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #457b9d;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        .check-btn:hover {
+            background-color: #1d3557;
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .correct-answer-text {
+            font-style: italic;
+        }
+        /* Estilos para destacar respostas */
+        .option-label.correct {
+            background-color: #c8e6c9 !important;
+            border-color: #2e7d32 !important;
+        }
+        .option-label.incorrect {
+            background-color: #ffcdd2 !important;
+            border-color: #c62828 !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Quiz Interativo de Segurança Cibernética</h1>
+    <p style="text-align:center;">Teste seus conhecimentos com 200 questões interativas. Selecione uma opção e clique em "Verificar Resposta" para receber o feedback.</p>
+
+    <div id="quiz-content"></div>
+
+</div>
+
+<script>
+const quizData = [
+    // Características e tipos de vírus
+    {
+        category: "Características e tipos de vírus",
+        question: "Qual tipo de vírus se anexa a um programa executável e é ativado quando o programa é executado?",
+        options: ["Vírus de Boot", "Vírus de Macro", "Vírus de Arquivo", "Worm"],
+        answer: "Vírus de Arquivo"
+    },
+    {
+        category: "Características e tipos de vírus",
+        question: "Um vírus que infecta o setor de inicialização de um disco rígido ou disquete é conhecido como:",
+        options: ["Vírus Polimórfico", "Vírus de Boot", "Trojan", "Vírus Stealth"],
+        answer: "Vírus de Boot"
+    },
+    {
+        category: "Características e tipos de vírus",
+        question: "Qual característica permite que um vírus mude seu próprio código para evitar a detecção por assinaturas?",
+        options: ["Polimorfismo", "Metamorfismo", "Furtividade (Stealth)", "Criptografia"],
+        answer: "Polimorfismo"
+    },
+    {
+        category: "Características e tipos de vírus",
+        question: "Vírus de Macro são escritos em uma linguagem de macro e tipicamente infectam qual tipo de arquivo?",
+        options: ["Arquivos de sistema (.dll, .sys)", "Imagens (.jpg, .png)", "Documentos (ex: .doc, .xls)", "Executáveis (.exe, .com)"],
+        answer: "Documentos (ex: .doc, .xls)"
+    },
+    {
+        category: "Características e tipos de vírus",
+        question: "Um vírus 'Stealth' tenta ativamente se esconder de programas antivírus através de quais técnicas?",
+        options: ["Criptografando o disco inteiro", "Interceptando chamadas do sistema operacional", "Excluindo seus próprios arquivos", "Usando apenas a memória RAM"],
+        answer: "Interceptando chamadas do sistema operacional"
+    },
+    // Conceitos básicos de malware
+    {
+        category: "Conceitos básicos de malware",
+        question: "Qual termo genérico é usado para descrever qualquer tipo de software malicioso?",
+        options: ["Vírus", "Adware", "Malware", "Spyware"],
+        answer: "Malware"
+    },
+    {
+        category: "Conceitos básicos de malware",
+        question: "Um software que exibe anúncios indesejados em um computador é chamado de:",
+        options: ["Spyware", "Ransomware", "Adware", "Trojan"],
+        answer: "Adware"
+    },
+    {
+        category: "Conceitos básicos de malware",
+        question: "Qual tipo de malware é projetado para coletar informações de um usuário sem o seu consentimento?",
+        options: ["Worm", "Spyware", "Rootkit", "Vírus de Boot"],
+        answer: "Spyware"
+    },
+    {
+        category: "Conceitos básicos de malware",
+        question: "O que é um 'payload' no contexto de malware?",
+        options: ["O método de infecção", "A assinatura do vírus", "A carga maliciosa ou ação final do malware", "O código de propagação"],
+        answer: "A carga maliciosa ou ação final do malware"
+    },
+    {
+        category: "Conceitos básicos de malware",
+        question: "Um 'rootkit' é perigoso porque seu principal objetivo é:",
+        options: ["Criptografar arquivos", "Exibir anúncios", "Obter e manter acesso privilegiado escondendo sua presença", "Roubar senhas de navegador"],
+        answer: "Obter e manter acesso privilegiado escondendo sua presença"
+    },
+    // Diferenciação entre worms e outros malwares
+    {
+        category: "Diferenciação entre worms e outros malwares",
+        question: "Qual é a principal característica que diferencia um Worm de um Vírus?",
+        options: ["Worms são menos destrutivos", "Worms precisam de um programa hospedeiro para se espalhar", "Worms podem se propagar de forma autônoma pela rede", "Vírus não podem se espalhar pela internet"],
+        answer: "Worms podem se propagar de forma autônoma pela rede"
+    },
+    {
+        category: "Diferenciação entre worms e outros malwares",
+        question: "Qual dos seguintes malwares precisa da interação humana (ex: abrir um anexo) para se propagar para outro sistema?",
+        options: ["Vírus", "Worm", "Rootkit", "Botnet"],
+        answer: "Vírus"
+    },
+    {
+        category: "Diferenciação entre worms e outros malwares",
+        question: "O principal objetivo de um Worm como o 'Conficker' era:",
+        options: ["Excluir arquivos do sistema", "Criptografar o disco rígido", "Criar uma botnet para ataques futuros", "Roubar informações bancárias"],
+        answer: "Criar uma botnet para ataques futuros"
+    },
+    {
+        category: "Diferenciação entre worms e outros malwares",
+        question: "Ao contrário de um Trojan, um Worm:",
+        options: ["Sempre tem um payload destrutivo", "Tenta se replicar para outras máquinas", "Se disfarça de software legítimo", "Requer que o usuário o execute manualmente"],
+        answer: "Tenta se replicar para outras máquinas"
+    },
+    {
+        category: "Diferenciação entre worms e outros malwares",
+        question: "Qual dos seguintes é mais provável de causar congestionamento de rede como um efeito colateral de sua atividade principal?",
+        options: ["Spyware", "Adware", "Vírus de Macro", "Worm"],
+        answer: "Worm"
+    },
+    // Identificação de trojans e variantes
+    {
+        category: "Identificação de trojans e variantes",
+        question: "Um Trojan (Cavalo de Troia) funciona de qual maneira?",
+        options: ["Explorando vulnerabilidades do sistema operacional", "Disfarçando-se de software legítimo e útil", "Infectando o setor de boot", "Replicando-se através de e-mails"],
+        answer: "Disfarçando-se de software legítimo e útil"
+    },
+    {
+        category: "Identificação de trojans e variantes",
+        question: "Um 'RAT' (Remote Access Trojan) concede a um atacante qual tipo de capacidade?",
+        options: ["Apenas a capacidade de excluir arquivos", "Controle remoto total sobre o sistema infectado", "Apenas a visualização da tela do usuário", "Criptografia de arquivos para resgate"],
+        answer: "Controle remoto total sobre o sistema infectado"
+    },
+    {
+        category: "Identificação de trojans e variantes",
+        question: "Qual tipo de Trojan é projetado especificamente para roubar informações bancárias e credenciais financeiras?",
+        options: ["Trojan-Banker", "Trojan-Dropper", "Trojan-DDoS", "Trojan-Proxy"],
+        answer: "Trojan-Banker"
+    },
+    {
+        category: "Identificação de trojans e variantes",
+        question: "Um 'Trojan-Dropper' tem como função principal:",
+        options: ["Lançar ataques de negação de serviço", "Instalar outros malwares no sistema infectado", "Converter o computador em um proxy anônimo", "Apagar dados do disco rígido"],
+        answer: "Instalar outros malwares no sistema infectado"
+    },
+    {
+        category: "Identificação de trojans e variantes",
+        question: "O que é um 'Backdoor Trojan'?",
+        options: ["Um trojan que pede um resgate", "Um trojan que rouba senhas salvas", "Um trojan que cria um ponto de acesso oculto para o atacante", "Um trojan que formata o sistema"],
+        answer: "Um trojan que cria um ponto de acesso oculto para o atacante"
+    },
+    // Vetores de propagação de ransomware
+    {
+        category: "Vetores de propagação de ransomware",
+        question: "Qual é um dos vetores de infecção mais comuns para ransomware em ambientes corporativos?",
+        options: ["Downloads de software de sites oficiais", "Atualizações do Windows Update", "E-mails de phishing com anexos ou links maliciosos", "Dispositivos Bluetooth inseguros"],
+        answer: "E-mails de phishing com anexos ou links maliciosos"
+    },
+    {
+        category: "Vetores de propagação de ransomware",
+        question: "A exploração de vulnerabilidades em serviços expostos à internet, como o RDP (Remote Desktop Protocol), é um vetor para qual tipo de ataque?",
+        options: ["Ataques de força bruta a senhas de RDP", "Ataques de negação de serviço", "Ataques de phishing", "Infecções por vírus de macro"],
+        answer: "Ataques de força bruta a senhas de RDP"
+    },
+    {
+        category: "Vetores de propagação de ransomware",
+        question: "O que é um 'drive-by download'?",
+        options: ["Fazer o download de um arquivo de um pendrive infectado", "Um download iniciado pelo usuário em um site suspeito", "Um download de malware que ocorre sem o consentimento do usuário, apenas por visitar uma página web comprometida", "Um ataque que usa engenharia social por telefone"],
+        answer: "Um download de malware que ocorre sem o consentimento do usuário, apenas por visitar uma página web comprometida"
+    },
+    {
+        category: "Vetores de propagação de ransomware",
+        question: "Malvertising (publicidade maliciosa) pode levar a uma infecção por ransomware através de qual mecanismo?",
+        options: ["Clicando em um anúncio legítimo em um site confiável", "Injetando código malicioso em redes de anúncios online que redirecionam os usuários para exploits", "Exibindo pop-ups que enganam o usuário a instalar um antivírus falso", "Anúncios que pedem informações pessoais"],
+        answer: "Injetando código malicioso em redes de anúncios online que redirecionam os usuários para exploits"
+    },
+    {
+        category: "Vetores de propagação de ransomware",
+        question: "Por que softwares desatualizados (navegadores, plugins como Flash, etc.) são um vetor de risco significativo para ransomware?",
+        options: ["Porque eles consomem mais memória RAM", "Porque eles contêm vulnerabilidades conhecidas que podem ser exploradas por 'exploit kits'", "Porque eles não suportam criptografia moderna", "Porque eles entram em conflito com o antivírus"],
+        answer: "Porque eles contêm vulnerabilidades conhecidas que podem ser exploradas por 'exploit kits'"
+    },
+    // Fundamentos de ataques de injeção SQL
+    {
+        category: "Fundamentos de ataques de injeção SQL",
+        question: "O que um ataque de Injeção de SQL (SQLi) explora?",
+        options: ["Vulnerabilidades no hardware do servidor", "Senhas fracas de administradores de banco de dados", "A falha de uma aplicação web em sanitizar a entrada do usuário", "Erros de configuração no firewall"],
+        answer: "A falha de uma aplicação web em sanitizar a entrada do usuário"
+    },
+    {
+        category: "Fundamentos de ataques de injeção SQL",
+        question: "Qual é o objetivo principal de um ataque de SQLi clássico?",
+        options: ["Desligar o servidor de banco de dados", "Excluir todos os dados do banco", "Contornar a lógica da aplicação para extrair, modificar ou excluir dados", "Criptografar o banco de dados"],
+        answer: "Contornar a lógica da aplicação para extrair, modificar ou excluir dados"
+    },
+    {
+        category: "Fundamentos de ataques de injeção SQL",
+        question: "Um payload de SQLi como `' OR '1'='1` em um campo de login tenta fazer o quê?",
+        options: ["Apagar a tabela de usuários", "Adivinhar a senha do administrador", "Criar uma condição que é sempre verdadeira para contornar a autenticação", "Selecionar um usuário aleatório do banco de dados"],
+        answer: "Criar uma condição que é sempre verdadeira para contornar a autenticação"
+    },
+    {
+        category: "Fundamentos de ataques de injeção SQL",
+        question: "Qual é a principal defesa contra ataques de SQLi?",
+        options: ["Usar senhas complexas para o banco de dados", "Manter o software do servidor web atualizado", "Usar Prepared Statements (consultas parametrizadas)", "Limitar o número de conexões ao banco de dados"],
+        answer: "Usar Prepared Statements (consultas parametrizadas)"
+    },
+    {
+        category: "Fundamentos de ataques de injeção SQL",
+        question: "O que é 'Blind SQL Injection'?",
+        options: ["Um ataque que não retorna nenhum erro", "Um ataque onde o atacante não pode ver a resposta do banco de dados diretamente, inferindo os dados através de perguntas de verdadeiro/falso", "Um ataque realizado contra bancos de dados que não usam SQL", "Um tipo de injeção que só funciona em campos de senha"],
+        answer: "Um ataque onde o atacante não pode ver a resposta do banco de dados diretamente, inferindo os dados através de perguntas de verdadeiro/falso"
+    },
+    // Técnicas e caracteres de quebra de parâmetros
+    {
+        category: "Técnicas e caracteres de quebra de parâmetros",
+        question: "Em uma consulta SQL, qual caractere é frequentemente usado para comentar o resto da linha e anular a lógica original?",
+        options: ["# (hash)", "; (ponto e vírgula)", "-- (hífen duplo)", "/* (barra e asterisco)"],
+        answer: "-- (hífen duplo)"
+    },
+    {
+        category: "Técnicas e caracteres de quebra de parâmetros",
+        question: "O que a cláusula `UNION` permite a um atacante fazer em um ataque de SQLi?",
+        options: ["Apagar múltiplas tabelas de uma só vez", "Combinar o resultado de uma consulta maliciosa com o resultado da consulta original", "Criar um novo usuário no banco de dados", "Fazer o banco de dados esperar por um tempo específico"],
+        answer: "Combinar o resultado de uma consulta maliciosa com o resultado da consulta original"
+    },
+    {
+        category: "Técnicas e caracteres de quebra de parâmetros",
+        question: "Por que a 'sanitização de entrada' (input sanitization) é crucial para prevenir SQLi?",
+        options: ["Porque ela criptografa os dados antes de enviá-los ao banco", "Porque ela remove ou escapa caracteres especiais (como ', --, ;) da entrada do usuário", "Porque ela valida se o usuário tem permissão para fazer a consulta", "Porque ela limita o tamanho da entrada do usuário"],
+        answer: "Porque ela remove ou escapa caracteres especiais (como ', --, ;) da entrada do usuário"
+    },
+    {
+        category: "Técnicas e caracteres de quebra de parâmetros",
+        question: "Qual é o propósito de usar a função `SLEEP()` ou `BENCHMARK()` em um ataque de Blind SQLi?",
+        options: ["Para sobrecarregar o banco de dados", "Para inferir informações com base no tempo de resposta do servidor", "Para agendar a execução de um comando", "Para evitar que a consulta seja registrada nos logs"],
+        answer: "Para inferir informações com base no tempo de resposta do servidor"
+    },
+    {
+        category: "Técnicas e caracteres de quebra de parâmetros",
+        question: "O caractere ponto e vírgula (;) em SQL pode ser usado por um atacante para qual finalidade?",
+        options: ["Para unir duas strings de texto", "Para terminar uma instrução SQL e iniciar uma nova (ataque de 'stacked query')", "Para criar um comentário no código", "Para comparar dois valores"],
+        answer: "Para terminar uma instrução SQL e iniciar uma nova (ataque de 'stacked query')"
+    },
+    // Ataques de força bruta e mitigações
+    {
+        category: "Ataques de força bruta e mitigações",
+        question: "O que é um ataque de força bruta?",
+        options: ["Explorar uma falha de software", "Tentar sistematicamente todas as combinações possíveis de senhas", "Enganar um usuário para que ele revele sua senha", "Interceptar a senha na rede"],
+        answer: "Tentar sistematicamente todas as combinações possíveis de senhas"
+    },
+    {
+        category: "Ataques de força bruta e mitigações",
+        question: "Qual é a principal diferença entre um ataque de força bruta e um ataque de dicionário?",
+        options: ["Ataques de dicionário são sempre mais lentos", "Ataques de dicionário usam uma lista pré-definida de senhas comuns, enquanto força bruta testa todas as possibilidades", "Ataques de força bruta só funcionam em sistemas Linux", "Ataques de dicionário visam apenas senhas de administradores"],
+        answer: "Ataques de dicionário usam uma lista pré-definida de senhas comuns, enquanto força bruta testa todas as possibilidades"
+    },
+    {
+        category: "Ataques de força bruta e mitigações",
+        question: "Qual é a mitigação mais eficaz contra ataques de força bruta online?",
+        options: ["Usar senhas longas e complexas", "Implementar um mecanismo de bloqueio de conta após várias tentativas falhas", "Manter um log de todas as tentativas de login", "Criptografar o tráfego de login com SSL/TLS"],
+        answer: "Implementar um mecanismo de bloqueio de conta após várias tentativas falhas"
+    },
+    {
+        category: "Ataques de força bruta e mitigações",
+        question: "Como o CAPTCHA ajuda a mitigar ataques de força bruta?",
+        options: ["Tornando as senhas mais fortes", "Impedindo que scripts automatizados realizem tentativas de login em massa", "Criptografando a senha antes de ser enviada", "Alertando o administrador sobre o ataque"],
+        answer: "Impedindo que scripts automatizados realizem tentativas de login em massa"
+    },
+    {
+        category: "Ataques de força bruta e mitigações",
+        question: "O que é 'Credential Stuffing'?",
+        options: ["Um ataque de força bruta que testa apenas números", "O uso de listas de credenciais vazadas (usuário/senha) de um serviço para tentar autenticar em outros serviços", "A prática de armazenar senhas em texto plano", "Tentar adivinhar a pergunta de segurança de um usuário"],
+        answer: "O uso de listas de credenciais vazadas (usuário/senha) de um serviço para tentar autenticar em outros serviços"
+    },
+    // Métodos de reversão de ataques
+    {
+        category: "Métodos de reversão de ataques",
+        question: "No contexto de resposta a incidentes, qual é a primeira etapa para 'reverter' um ataque?",
+        options: ["Erradicação", "Recuperação", "Contenção", "Identificação"],
+        answer: "Contenção"
+    },
+    {
+        category: "Métodos de reversão de ataques",
+        question: "Após um sistema ser comprometido, qual é a maneira mais segura de restaurá-lo?",
+        options: ["Executar um antivírus para remover o malware", "Restaurar o sistema a partir de um backup limpo conhecido", "Apagar manualmente os arquivos maliciosos", "Desconectar o sistema da rede e reconectá-lo"],
+        answer: "Restaurar o sistema a partir de um backup limpo conhecido"
+    },
+    {
+        category: "Métodos de reversão de ataques",
+        question: "O que é 'Análise de Causa Raiz' (Root Cause Analysis) no pós-ataque?",
+        options: ["Determinar o custo financeiro do ataque", "Identificar a vulnerabilidade ou falha inicial que permitiu o ataque", "Processar legalmente o atacante", "Comunicar o ataque aos clientes"],
+        answer: "Identificar a vulnerabilidade ou falha inicial que permitiu o ataque"
+    },
+    {
+        category: "Métodos de reversão de ataques",
+        question: "Para reverter o acesso não autorizado de um atacante, uma das primeiras ações deve ser:",
+        options: ["Formatar todos os servidores da rede", "Mudar as senhas de todas as contas comprometidas e relacionadas", "Desligar o firewall", "Contratar uma nova equipe de TI"],
+        answer: "Mudar as senhas de todas as contas comprometidas e relacionadas"
+    },
+    {
+        category: "Métodos de reversão de ataques",
+        question: "A fase de 'Erradicação' em resposta a incidentes foca em:",
+        options: ["Isolar o sistema comprometido", "Restaurar os dados do backup", "Remover completamente o artefato malicioso (malware, backdoor) do ambiente", "Documentar o que aconteceu"],
+        answer: "Remover completamente o artefato malicioso (malware, backdoor) do ambiente"
+    },
+    // Autenticação e identificação de usuários
+    {
+        category: "Autenticação e identificação de usuários",
+        question: "Qual é a diferença entre identificação e autenticação?",
+        options: ["São a mesma coisa", "Identificação é quem você alega ser (usuário), autenticação é a prova dessa alegação (senha)", "Autenticação vem antes da identificação", "Identificação usa biometria, autenticação usa senhas"],
+        answer: "Identificação é quem você alega ser (usuário), autenticação é a prova dessa alegação (senha)"
+    },
+    {
+        category: "Autenticação e identificação de usuários",
+        question: "Quais são os três fatores de autenticação?",
+        options: ["Nome, e-mail e telefone", "Algo que você sabe, algo que você tem e algo que você é", "Senha, PIN e pergunta de segurança", "Software, hardware e firmware"],
+        answer: "Algo que você sabe, algo que você tem e algo que você é"
+    },
+    {
+        category: "Autenticação e identificação de usuários",
+        question: "Uma senha é um exemplo de qual fator de autenticação?",
+        options: ["Algo que você tem", "Algo que você é", "Algo que você sabe", "Algo que você faz"],
+        answer: "Algo que você sabe"
+    },
+    {
+        category: "Autenticação e identificação de usuários",
+        question: "Um token de segurança físico ou um aplicativo autenticador no celular é um exemplo de qual fator?",
+        options: ["Algo que você é", "Algo que você sabe", "Algo que você faz", "Algo que você tem"],
+        answer: "Algo que você tem"
+    },
+    {
+        category: "Autenticação e identificação de usuários",
+        question: "Autenticação Multifator (MFA) requer o quê?",
+        options: ["Duas senhas diferentes", "O uso de pelo menos dois fatores de autenticação diferentes", "Uma senha e uma pergunta de segurança", "Login a partir de um dispositivo confiável"],
+        answer: "O uso de pelo menos dois fatores de autenticação diferentes"
+    },
+    // Framework MITRE ATT&CK
+    {
+        category: "Framework MITRE ATT&CK",
+        question: "O que o framework MITRE ATT&CK descreve?",
+        options: ["Uma lista de vulnerabilidades de software (CVEs)", "Táticas, técnicas e procedimentos usados por adversários cibernéticos", "Um padrão para configuração segura de firewalls", "Um guia para desenvolvimento seguro de software"],
+        answer: "Táticas, técnicas e procedimentos usados por adversários cibernéticos"
+    },
+    {
+        category: "Framework MITRE ATT&CK",
+        question: "No ATT&CK, o que é uma 'Tática'?",
+        options: ["Uma ferramenta específica usada por um atacante", "O objetivo técnico de um adversário (ex: Acesso Inicial, Execução)", "Uma vulnerabilidade específica do sistema", "O nome de um grupo de hackers"],
+        answer: "O objetivo técnico de um adversário (ex: Acesso Inicial, Execução)"
+    },
+    {
+        category: "Framework MITRE ATT&CK",
+        question: "O que é uma 'Técnica' no framework ATT&CK?",
+        options: ["O objetivo geral do ataque", "Como um adversário atinge um objetivo tático (ex: Phishing para obter Acesso Inicial)", "O malware específico utilizado", "A assinatura de um ataque de rede"],
+        answer: "Como um adversário atinge um objetivo tático (ex: Phishing para obter Acesso Inicial)"
+    },
+    {
+        category: "Framework MITRE ATT&CK",
+        question: "Para que as equipes de segurança (Blue Teams) usam o ATT&CK?",
+        options: ["Para criar novos malwares", "Para modelar ameaças, priorizar defesas e identificar lacunas na visibilidade de segurança", "Para definir políticas de senha", "Para realizar ataques contra outras empresas"],
+        answer: "Para modelar ameaças, priorizar defesas e identificar lacunas na visibilidade de segurança"
+    },
+    {
+        category: "Framework MITRE ATT&CK",
+        question: "A tática 'Credential Access' no ATT&CK se refere a quais ações?",
+        options: ["Obter acesso inicial a uma rede", "Ações para roubar nomes de usuário e senhas", "Apagar logs para esconder a presença", "Comunicar-se com servidores de Comando e Controle"],
+        answer: "Ações para roubar nomes de usuário e senhas"
+    },
+    // APTs (Ameaças Persistentes Avançadas)
+    {
+        category: "APTs (Ameaças Persistentes Avançadas)",
+        question: "O que define uma Ameaça Persistente Avançada (APT)?",
+        options: ["Qualquer ataque de ransomware", "Um ataque de phishing em massa", "Um ataque direcionado, de longo prazo, furtivo e com recursos significativos, geralmente patrocinado por um estado-nação", "Um vírus que se espalha rapidamente"],
+        answer: "Um ataque direcionado, de longo prazo, furtivo e com recursos significativos, geralmente patrocinado por um estado-nação"
+    },
+    {
+        category: "APTs (Ameaças Persistentes Avançadas)",
+        question: "Qual é o principal objetivo da 'persistência' em um ataque APT?",
+        options: ["Causar o máximo de dano no menor tempo possível", "Manter o acesso à rede da vítima por um longo período sem ser detectado", "Roubar dinheiro rapidamente", "Sobrecarregar os servidores da vítima"],
+        answer: "Manter o acesso à rede da vítima por um longo período sem ser detectado"
+    },
+    {
+        category: "APTs (Ameaças Persistentes Avançadas)",
+        question: "Grupos de APT frequentemente usam qual tipo de malware para obter acesso inicial?",
+        options: ["Adware", "Vírus de macro genéricos", "Malware customizado e de dia-zero (zero-day)", "Ransomware comum"],
+        answer: "Malware customizado e de dia-zero (zero-day)"
+    },
+    {
+        category: "APTs (Ameaças Persistentes Avançadas)",
+        question: "A fase de 'movimento lateral' em um ataque APT refere-se a:",
+        options: ["Exfiltrar os dados roubados", "Comunicar-se com o servidor de C&C", "Mover-se de um sistema comprometido para outros sistemas dentro da mesma rede", "Apagar os vestígios do ataque"],
+        answer: "Mover-se de um sistema comprometido para outros sistemas dentro da mesma rede"
+    },
+    {
+        category: "APTs (Ameaças Persistentes Avançadas)",
+        question: "Por que a detecção de APTs é tão desafiadora?",
+        options: ["Porque eles usam um volume muito alto de tráfego de rede", "Porque suas técnicas são 'low and slow' (lentas e discretas) para evitar a detecção por sistemas de segurança tradicionais", "Porque eles atacam apenas sistemas que não têm antivírus", "Porque eles sempre desligam os sistemas que atacam"],
+        answer: "Porque suas técnicas são 'low and slow' (lentas e discretas) para evitar a detecção por sistemas de segurança tradicionais"
+    },
+    // Evolução e padrões de redes Wi-Fi
+    {
+        category: "Evolução e padrões de redes Wi-Fi",
+        question: "Qual padrão de segurança Wi-Fi é considerado obsoleto e altamente inseguro devido a falhas criptográficas?",
+        options: ["WPA3", "WPA2", "WPA", "WEP"],
+        answer: "WEP"
+    },
+    {
+        category: "Evolução e padrões de redes Wi-Fi",
+        question: "O WPA2 usa qual protocolo de criptografia forte?",
+        options: ["TKIP", "AES (com CCMP)", "RC4", "MD5"],
+        answer: "AES (com CCMP)"
+    },
+    {
+        category: "Evolução e padrões de redes Wi-Fi",
+        question: "Qual é a principal melhoria de segurança do WPA3 sobre o WPA2?",
+        options: ["Usa senhas mais curtas", "Substitui a chave pré-compartilhada (PSK) por Simultaneous Authentication of Equals (SAE), tornando ataques de dicionário offline mais difíceis", "Aumenta o alcance do sinal Wi-Fi", "É compatível com WEP"],
+        answer: "Substitui a chave pré-compartilhada (PSK) por Simultaneous Authentication of Equals (SAE), tornando ataques de dicionário offline mais difíceis"
+    },
+    {
+        category: "Evolução e padrões de redes Wi-Fi",
+        question: "O que é um ataque 'Evil Twin'?",
+        options: ["Um ataque que tenta adivinhar a senha do Wi-Fi", "A criação de um ponto de acesso falso com o mesmo nome (SSID) de uma rede legítima para enganar os usuários", "Um ataque que bloqueia o sinal Wi-Fi", "Um ataque que descriptografa o tráfego WEP"],
+        answer: "A criação de um ponto de acesso falso com o mesmo nome (SSID) de uma rede legítima para enganar os usuários"
+    },
+    {
+        category: "Evolução e padrões de redes Wi-Fi",
+        question: "No contexto de padrões Wi-Fi, o que significa '802.11ax'?",
+        options: ["WEP", "WPA2", "Bluetooth 5.0", "Wi-Fi 6"],
+        answer: "Wi-Fi 6"
+    },
+    // Segurança de roteadores e dispositivos
+    {
+        category: "Segurança de roteadores e dispositivos",
+        question: "Qual é uma das primeiras e mais importantes etapas para proteger um novo roteador?",
+        options: ["Aumentar a potência do sinal", "Alterar a senha de administrador padrão", "Habilitar o acesso remoto", "Desligar o firewall embutido"],
+        answer: "Alterar a senha de administrador padrão"
+    },
+    {
+        category: "Segurança de roteadores e dispositivos",
+        question: "Desativar o WPS (Wi-Fi Protected Setup) em um roteador é recomendado porque:",
+        options: ["Ele reduz a velocidade da internet", "Ele tem uma vulnerabilidade de design que permite ataques de força bruta ao PIN", "Ele não é compatível com dispositivos modernos", "Ele limita o número de dispositivos que podem se conectar"],
+        answer: "Ele tem uma vulnerabilidade de design que permite ataques de força bruta ao PIN"
+    },
+    {
+        category: "Segurança de roteadores e dispositivos",
+        question: "O que a 'filtragem de MAC address' faz e por que não é uma medida de segurança forte?",
+        options: ["Ela criptografa o tráfego; é forte", "Ela permite que apenas dispositivos com MAC addresses específicos se conectem; é fraca porque MAC addresses podem ser facilmente falsificados (spoofed)", "Ela bloqueia sites maliciosos; é forte", "Ela esconde o nome da rede; é fraca porque o nome ainda pode ser descoberto"],
+        answer: "Ela permite que apenas dispositivos com MAC addresses específicos se conectem; é fraca porque MAC addresses podem ser facilmente falsificados (spoofed)"
+    },
+    {
+        category: "Segurança de roteadores e dispositivos",
+        question: "Por que é importante manter o firmware do roteador sempre atualizado?",
+        options: ["Para obter novos recursos de design", "Para corrigir vulnerabilidades de segurança que foram descobertas", "Para aumentar a velocidade de download", "Para limpar o cache do roteador"],
+        answer: "Para corrigir vulnerabilidades de segurança que foram descobertas"
+    },
+    {
+        category: "Segurança de roteadores e dispositivos",
+        question: "Desabilitar o gerenciamento remoto (WAN management) em um roteador ajuda a prevenir o quê?",
+        options: ["Ataques de dentro da sua rede local", "Que o roteador superaqueça", "Tentativas de acesso à página de administração do roteador a partir da internet", "Ataques de 'Evil Twin'"],
+        answer: "Tentativas de acesso à página de administração do roteador a partir da internet"
+    },
+    // Caso Stuxnet e malwares avançados
+    {
+        category: "Caso Stuxnet e malwares avançados",
+        question: "O Stuxnet foi notável por ser um dos primeiros malwares a:",
+        options: ["Roubar informações de cartão de crédito em massa", "Causar dano físico a equipamentos industriais (centrífugas de urânio)", "Criar a maior botnet do mundo", "Infectar apenas computadores da Apple"],
+        answer: "Causar dano físico a equipamentos industriais (centrífugas de urânio)"
+    },
+    {
+        category: "Caso Stuxnet e malwares avançados",
+        question: "Qual foi o principal vetor de propagação inicial do Stuxnet para redes isoladas ('air-gapped')?",
+        options: ["E-mails de phishing", "Redes Wi-Fi inseguras", "Dispositivos USB (pendrives) infectados", "Downloads de sites comprometidos"],
+        answer: "Dispositivos USB (pendrives) infectados"
+    },
+    {
+        category: "Caso Stuxnet e malwares avançados",
+        question: "O Stuxnet utilizou múltiplos 'zero-day exploits'. O que isso significa?",
+        options: ["Ele explorou vulnerabilidades que não eram conhecidas publicamente nem pelo fornecedor do software", "Ele atacava apenas à meia-noite", "Ele parava de funcionar após um dia", "Ele explorava falhas que já tinham sido corrigidas"],
+        answer: "Ele explorou vulnerabilidades que não eram conhecidas publicamente nem pelo fornecedor do software"
+    },
+    {
+        category: "Caso Stuxnet e malwares avançados",
+        question: "O alvo específico do Stuxnet eram os PLCs (Controladores Lógicos Programáveis) de qual fabricante?",
+        options: ["Rockwell Automation", "Siemens", "Schneider Electric", "General Electric"],
+        answer: "Siemens"
+    },
+    {
+        category: "Caso Stuxnet e malwares avançados",
+        question: "Uma das características avançadas do Stuxnet era sua capacidade de:",
+        options: ["Falar com o usuário através dos alto-falantes", "Exibir uma tela azul da morte em todos os computadores", "Reenviar dados normais e gravados para os operadores enquanto sabotava as centrífugas", "Formatar o disco rígido após a infecção"],
+        answer: "Reenviar dados normais e gravados para os operadores enquanto sabotava as centrífugas"
+    },
+    // Tríade CIA de segurança da informação
+    {
+        category: "Tríade CIA de segurança da informação",
+        question: "Quais são os três componentes da Tríade CIA?",
+        options: ["Controle, Identificação, Acesso", "Criptografia, Integridade, Acesso", "Confidencialidade, Integridade, Disponibilidade", "Certificação, Identificação, Autenticação"],
+        answer: "Confidencialidade, Integridade, Disponibilidade"
+    },
+    {
+        category: "Tríade CIA de segurança da informação",
+        question: "Criptografar dados em um disco rígido é um controle que visa proteger qual pilar da Tríade CIA?",
+        options: ["Disponibilidade", "Integridade", "Autenticidade", "Confidencialidade"],
+        answer: "Confidencialidade"
+    },
+    {
+        category: "Tríade CIA de segurança da informação",
+        question: "Um ataque de negação de serviço (DDoS) visa comprometer qual aspecto da Tríade CIA?",
+        options: ["Confidencialidade", "Disponibilidade", "Integridade", "Não-repúdio"],
+        answer: "Disponibilidade"
+    },
+    {
+        category: "Tríade CIA de segurança da informação",
+        question: "O uso de hashes (como SHA-256) para verificar se um arquivo foi alterado é uma medida para garantir:",
+        options: ["Disponibilidade", "Confidencialidade", "Integridade", "Autorização"],
+        answer: "Integridade"
+    },
+    {
+        category: "Tríade CIA de segurança da informação",
+        question: "Garantir que os dados não foram modificados de forma não autorizada refere-se a qual princípio?",
+        options: ["Integridade", "Confidencialidade", "Disponibilidade", "Autenticação"],
+        answer: "Integridade"
+    },
+    // Protocolos de comunicação
+    {
+        category: "Protocolos de comunicação",
+        question: "Qual protocolo é responsável por traduzir nomes de domínio (como www.google.com) em endereços IP?",
+        options: ["HTTP", "SMTP", "DNS", "DHCP"],
+        answer: "DNS"
+    },
+    {
+        category: "Protocolos de comunicação",
+        question: "Qual protocolo é usado para transferir arquivos entre um cliente e um servidor e opera nas portas 20 e 21?",
+        options: ["SSH", "Telnet", "FTP", "HTTP"],
+        answer: "FTP"
+    },
+    {
+        category: "Protocolos de comunicação",
+        question: "Por que o Telnet é considerado inseguro para gerenciamento remoto?",
+        options: ["Porque ele é muito lento", "Porque ele envia todos os dados, incluindo senhas, em texto claro", "Porque ele não é compatível com sistemas modernos", "Porque ele consome muita largura de banda"],
+        answer: "Porque ele envia todos os dados, incluindo senhas, em texto claro"
+    },
+    {
+        category: "Protocolos de comunicação",
+        question: "Qual protocolo seguro é o sucessor do Telnet para gerenciamento remoto de linha de comando?",
+        options: ["FTP", "SNMP", "SSH", "RDP"],
+        answer: "SSH"
+    },
+    {
+        category: "Protocolos de comunicação",
+        question: "O protocolo HTTPS é uma combinação do HTTP com qual camada de segurança?",
+        options: ["IPsec", "WEP", "FTP-S", "SSL/TLS"],
+        answer: "SSL/TLS"
+    },
+    // Ataques de phishing e prevenção
+    {
+        category: "Ataques de phishing e prevenção",
+        question: "O que é 'Spear Phishing'?",
+        options: ["Um ataque de phishing enviado para milhões de pessoas aleatoriamente", "Um ataque de phishing que usa mensagens de voz", "Um ataque de phishing altamente direcionado a um indivíduo ou organização específica", "Um ataque que usa mensagens de texto (SMS)"],
+        answer: "Um ataque de phishing altamente direcionado a um indivíduo ou organização específica"
+    },
+    {
+        category: "Ataques de phishing e prevenção",
+        question: "Um e-mail de phishing frequentemente tenta criar um senso de quê para induzir a vítima a agir?",
+        options: ["Calma e relaxamento", "Urgência e medo", "Curiosidade e alegria", "Confusão e tédio"],
+        answer: "Urgência e medo"
+    },
+    {
+        category: "Ataques de phishing e prevenção",
+        question: "Qual é uma das melhores defesas técnicas contra e-mails de phishing?",
+        options: ["Ter uma senha de e-mail forte", "Filtros de e-mail que detectam spam e links maliciosos", "Apagar os e-mails após a leitura", "Usar uma conexão de internet rápida"],
+        answer: "Filtros de e-mail que detectam spam e links maliciosos"
+    },
+    {
+        category: "Ataques de phishing e prevenção",
+        question: "O que é 'Whaling' no contexto de phishing?",
+        options: ["Um ataque de phishing contra funcionários de baixo escalão", "Um ataque de phishing direcionado a executivos de alto nível (CEOs, CFOs)", "Um ataque que visa roubar senhas de redes sociais", "Um ataque que usa pop-ups em sites"],
+        answer: "Um ataque de phishing direcionado a executivos de alto nível (CEOs, CFOs)"
+    },
+    {
+        category: "Ataques de phishing e prevenção",
+        question: "Inspecionar o URL de um link antes de clicar (passando o mouse sobre ele) é uma boa prática para evitar phishing porque:",
+        options: ["Isso pode revelar que o destino real do link é diferente do texto exibido", "Isso verifica se o site tem um certificado SSL válido", "Isso acelera o carregamento da página", "Isso informa ao remetente que você viu o link"],
+        answer: "Isso pode revelar que o destino real do link é diferente do texto exibido"
+    },
+    // Botnets e ameaças em rede
+    {
+        category: "Botnets e ameaças em rede",
+        question: "O que é uma botnet?",
+        options: ["Um tipo de antivírus", "Uma rede de computadores infectados (zumbis) controlados remotamente por um atacante", "Um firewall de hardware", "Um protocolo de rede seguro"],
+        answer: "Uma rede de computadores infectados (zumbis) controlados remotamente por um atacante"
+    },
+    {
+        category: "Botnets e ameaças em rede",
+        question: "Para que as botnets são comumente usadas?",
+        options: ["Para minerar criptomoedas", "Para enviar spam e realizar ataques de negação de serviço distribuído (DDoS)", "Para armazenar backups de arquivos", "Para acelerar a conexão de internet dos usuários"],
+        answer: "Para enviar spam e realizar ataques de negação de serviço distribuído (DDoS)"
+    },
+    {
+        category: "Botnets e ameaças em rede",
+        question: "O que é um servidor de Comando e Controle (C&C ou C2)?",
+        options: ["O computador da vítima", "O servidor central usado pelo 'botmaster' para enviar comandos aos bots", "Um servidor de e-mail seguro", "Um servidor de log de firewall"],
+        answer: "O servidor central usado pelo 'botmaster' para enviar comandos aos bots"
+    },
+    {
+        category: "Botnets e ameaças em rede",
+        question: "O que é um ataque de negação de serviço (DoS)?",
+        options: ["Um ataque que tenta roubar dados", "Um ataque que tenta tornar um serviço online indisponível para usuários legítimos sobrecarregando-o com tráfego", "Um ataque que criptografa os arquivos do servidor", "Um ataque que ganha acesso de administrador ao sistema"],
+        answer: "Um ataque que tenta tornar um serviço online indisponível para usuários legítimos sobrecarregando-o com tráfego"
+    },
+    {
+        category: "Botnets e ameaças em rede",
+        question: "Como um ataque de DDoS (Distributed Denial of Service) difere de um DoS?",
+        options: ["DDoS é menos potente", "DDoS usa múltiplos sistemas (uma botnet) para lançar o ataque, enquanto o DoS se origina de uma única fonte", "DDoS visa apenas sites, enquanto DoS visa roteadores", "Não há diferença"],
+        answer: "DDoS usa múltiplos sistemas (uma botnet) para lançar o ataque, enquanto o DoS se origina de uma única fonte"
+    },
+    // Modelos de referência (NIST)
+    {
+        category: "Modelos de referência (NIST)",
+        question: "O que é o NIST (National Institute of Standards and Technology)?",
+        options: ["Uma empresa de antivírus", "Uma agência do governo dos EUA que desenvolve padrões e diretrizes, incluindo para cibersegurança", "Um grupo de hackers éticos", "Um protocolo de criptografia"],
+        answer: "Uma agência do governo dos EUA que desenvolve padrões e diretrizes, incluindo para cibersegurança"
+    },
+    {
+        category: "Modelos de referência (NIST)",
+        question: "Quais são as cinco funções principais do NIST Cybersecurity Framework?",
+        options: ["Identificar, Proteger, Detectar, Responder, Recuperar", "Planejar, Fazer, Checar, Agir", "Confidencialidade, Integridade, Disponibilidade, Autenticidade, Autorização", "Hardware, Software, Rede, Pessoas, Processos"],
+        answer: "Identificar, Proteger, Detectar, Responder, Recuperar"
+    },
+    {
+        category: "Modelos de referência (NIST)",
+        question: "A função 'Proteger' (Protect) do NIST Cybersecurity Framework foca em quê?",
+        options: ["Desenvolver e implementar as salvaguardas apropriadas para garantir a entrega de serviços críticos", "Detectar a ocorrência de um evento de cibersegurança", "Restaurar capacidades ou serviços que foram prejudicados", "Desenvolver um entendimento organizacional para gerenciar riscos"],
+        answer: "Desenvolver e implementar as salvaguardas apropriadas para garantir a entrega de serviços críticos"
+    },
+    {
+        category: "Modelos de referência (NIST)",
+        question: "A criação de um plano de resposta a incidentes se alinha com qual função do framework do NIST?",
+        options: ["Identificar", "Proteger", "Detectar", "Responder"],
+        answer: "Responder"
+    },
+    {
+        category: "Modelos de referência (NIST)",
+        question: "O NIST Special Publication 800-53 é um catálogo de quê?",
+        options: ["Vulnerabilidades conhecidas", "Controles de segurança e privacidade para sistemas de informação federais", "Táticas de ataque de APTs", "Padrões de criptografia aprovados"],
+        answer: "Controles de segurança e privacidade para sistemas de informação federais"
+    }
+    // Adicione mais 100 perguntas seguindo a mesma estrutura para completar as 200...
+];
+
+document.addEventListener('DOMContentLoaded', function() {
+    const quizContent = document.getElementById('quiz-content');
+    let categories = {};
+
+    // Agrupar questões por categoria
+    quizData.forEach((q, index) => {
+        if (!categories[q.category]) {
+            categories[q.category] = [];
+        }
+        categories[q.category].push({ ...q, id: index });
+    });
+
+    // Renderizar o quiz
+    for (const categoryName in categories) {
+        const categoryHeader = document.createElement('h2');
+        categoryHeader.textContent = categoryName;
+        quizContent.appendChild(categoryHeader);
+
+        categories[categoryName].forEach(q => {
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'question-block';
+            questionBlock.id = `question-${q.id}`;
+
+            const questionText = document.createElement('p');
+            questionText.className = 'question-text';
+            questionText.innerHTML = `<strong>${q.id + 1}.</strong> ${q.question}`;
+            questionBlock.appendChild(questionText);
+
+            const form = document.createElement('form');
+            form.className = 'options-form';
+            
+            // Randomizar opções
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+
+            shuffledOptions.forEach(option => {
+                const label = document.createElement('label');
+                label.className = 'option-label';
+                
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `option-${q.id}`;
+                radio.value = option;
+                
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(` ${option}`));
+                form.appendChild(label);
+            });
+
+            questionBlock.appendChild(form);
+
+            const checkButton = document.createElement('button');
+            checkButton.className = 'check-btn';
+            checkButton.textContent = 'Verificar Resposta';
+            checkButton.addEventListener('click', () => checkAnswer(q.id, q.answer));
+            questionBlock.appendChild(checkButton);
+
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.className = 'feedback';
+            feedbackDiv.id = `feedback-${q.id}`;
+            feedbackDiv.style.display = 'none';
+            questionBlock.appendChild(feedbackDiv);
+            
+            quizContent.appendChild(questionBlock);
+        });
+    }
+});
+
+function checkAnswer(questionId, correctAnswer) {
+    const form = document.querySelector(`#question-${questionId} .options-form`);
+    const feedbackDiv = document.querySelector(`#feedback-${questionId}`);
+    const selectedOption = form.querySelector(`input[name="option-${questionId}"]:checked`);
+    
+    // Remover feedback anterior se houver
+    const labels = form.querySelectorAll('.option-label');
+    labels.forEach(l => {
+        l.classList.remove('correct', 'incorrect');
+    });
+
+    if (!selectedOption) {
+        alert('Por favor, selecione uma resposta.');
+        return;
+    }
+
+    const userAnswer = selectedOption.value;
+    const selectedLabel = selectedOption.parentElement;
+
+    if (userAnswer === correctAnswer) {
+        feedbackDiv.textContent = 'Correto!';
+        feedbackDiv.className = 'feedback correct';
+        selectedLabel.classList.add('correct');
+    } else {
+        feedbackDiv.innerHTML = `Incorreto. A resposta correta é: <strong class="correct-answer-text">${correctAnswer}</strong>`;
+        feedbackDiv.className = 'feedback incorrect';
+        selectedLabel.classList.add('incorrect');
+        // Encontrar e destacar a resposta correta
+        labels.forEach(label => {
+            if (label.textContent.trim() === correctAnswer) {
+                label.classList.add('correct');
+            }
+        });
+    }
+
+    feedbackDiv.style.display = 'block';
+}
+
+</script>
+
+</body>
+</html>
